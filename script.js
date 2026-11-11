@@ -725,3 +725,26 @@ function hardRestart() {
 
     showPage('screen-splash');
 }
+//=================================
+function copyScript(elementId, btn) {
+  const text = document.getElementById(elementId).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = btn.innerText;
+    btn.innerText = '✅ Copied!';
+    setTimeout(() => {
+      btn.innerText = originalText;
+    }, 2000);
+  });
+}
+//===========================================
+const inputs = document.querySelectorAll('#flightSummary input, #flightSummary select, textarea');
+
+inputs.forEach(input => {
+  if (localStorage.getItem(input.id)) {
+    input.value = localStorage.getItem(input.id);
+  }
+
+  input.addEventListener('input', () => {
+    localStorage.setItem(input.id, input.value);
+  });
+});
